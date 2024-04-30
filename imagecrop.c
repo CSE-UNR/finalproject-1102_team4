@@ -47,8 +47,7 @@ int main(){
 		case '2':
 			displayImage(rows, cols, fp);
 			break:
-		
-
+	}
 
 
 	return 0;
