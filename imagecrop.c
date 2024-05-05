@@ -1,4 +1,4 @@
-//Name: Vansh Sachdeva, Wiem Boubaker
+//Name: Vansh Sachdeva 12, Wiem Boubaker
 //Due date: 05/07/2024
 //Purpose: Image Cropping
 
