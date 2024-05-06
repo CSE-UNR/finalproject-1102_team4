@@ -32,7 +32,7 @@ int main() {
         printf("2. Display the current image\n");
         printf("3. Edit the current image\n");
         printf("0. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice1);
 
         switch (choice1) {
@@ -43,7 +43,7 @@ int main() {
                 if (fp == NULL) {
                     printf("Error opening file.\n");
                 } else {
-                    printf("Image successfully loaded\n");
+                    printf("\nImage successfully loaded\n");
                     fclose(fp);
                 }
                 break;
@@ -52,7 +52,7 @@ int main() {
                 if (fp == NULL) {
                     printf("Error opening file.\n");
                 } else {
-                    while (fgets(row, sizeof(row), fp)) {
+                    while (fgets(row, NUM_ROWS, fp)) {
                         width = 0; // Reset width for each row
                         for (int i = 0; row[i] != '\n' && row[i] != '\0'; i++) {
                             width++;
@@ -71,6 +71,8 @@ int main() {
                 switch (choice2) {
                     case 1:
                         displayImageToCrop(originalImage, height, width);
+                        cropImage(originalImage, height, width);
+                        saveImage(originalImage, height, width);
                         break;
                     case 2:
                         dimImage(originalImage, height, width);
@@ -102,6 +104,7 @@ int main() {
 
 void displayImage(char image[][NUM_COLS], int rows, int cols) {
     printf("Displaying image:\n");
+    printf("\n");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
            switch (image[i][j]) {
@@ -136,7 +139,7 @@ int displaySecondMenu() {
         printf("2. Dim\n");
         printf("3. Brighten\n");
         printf("4. Back to main menu\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
     } while (choice < 1 || choice > 4);
     return choice;
@@ -167,17 +170,17 @@ void dimImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
 
 void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
     for (int i = 0; i < rows; i++) {
-        if(i == 0|| i == cols){
+        if(i == 0 || i == cols){
            printf("%d", i+1);
            }
-           else{
+           else if(rows < 21){
            printf(" ");
            }
         for (int j = 0; j < cols; j++) {
            if(j == 0|| j == cols-1){
            printf("%d", j+1);
            }
-           else{
+           else if(cols < 12){
            printf(" ");
            }
            switch (image[i][j]) {
@@ -204,6 +207,20 @@ void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
     }
 }
 void cropImage(char (*currentImage)[NUM_COLS], int rows, int cols){
+	int startRow, endRow, startCol, endCol = 0;
+	printf("The image you want to crop is 12 x 21.\n");
+	printf("The row and column values start in the upper lefthand corner.\n");
+	printf("\n");
+	printf("Which column do you want to be the new left side? ");
+	scanf("%d", &startCol);
+	printf("\nWhich column do you want to be the right left side? ");
+	scanf("%d", &endCol);
+	printf("\nWhich row do you want to be the new top? ");
+	scanf("%d", &startRow);
+	printf("\nWhich row do you want to be the new bottom? ");
+	scanf("%d", &endRow);
+	if(endCol < startCol){
+		printf("Invalid column number. Choose a number between %d and %d: ", 
 }
 
 
