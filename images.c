@@ -169,19 +169,15 @@ void dimImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
 }
 
 void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
-    printf(" 1                     21\n");
-    for (int i = 0; i < rows; i++) {
-        if(i == 0 || i == cols){
-           printf("%d", i+1);
-           }
-           else if(rows < 21){
+    printf(" 1                    21\n");
+    printf("1    00         00    \n");
+    image[rows][cols];
+    for (int i = 1; i < rows; i++) {
+           if(rows < 21){
            printf(" ");
            }
         for (int j = 0; j < cols; j++) {
-           if(j == 0|| j == cols-1){
-           printf("%d", j+1);
-           }
-           else if(cols < 12){
+           if(cols < 12){
            printf(" ");
            }
            switch (image[i][j]) {
@@ -217,25 +213,25 @@ void cropImage(char (*currentImage)[NUM_COLS], int rows, int cols){
 	printf("Which column do you want to be the new left side? ");
 	scanf("%d", &startCol);
 	if(startCol < cols){
-		printf("Invalid column number. Choose a number between %d and %d: ", startCol, cols - 1);
+		printf("Invalid column number. Choose a number between %d and %d: ", startCol + 1, cols - 1);
 		scanf("%d", &startCol);
 	}
 	printf("\nWhich column do you want to be the right left side? ");
 	scanf("%d", &endCol);
-	if(cols <= endCol){
-		printf("Invalid column number. Choose a number between %d and %d: ", cols - 1, endCol);
+	if(endCol > cols){
+		printf("Invalid column number. Choose a number between %d and %d: ", startCol, cols - 1);
 		scanf("%d", &endCol);
 	}
 	printf("\nWhich row do you want to be the new top? ");
 	scanf("%d", &startRow);
-	if(cols <= startCol){
-		printf("Invalid row number. Choose a number between %d and %d: ", cols - 1, startRow);
-		scanf("%d", &endCol);
+	if(startRow < rows){
+		printf("Invalid row number. Choose a number between %d and %d: ", startRow + 1, rows - 1);
+		scanf("%d", &startRow);
 	}
 	printf("\nWhich row do you want to be the new bottom? ");
 	scanf("%d", &startRow);
-	if(cols <= startCol){
-		printf("Invalid column number. Choose a number between %d and %d: ", cols - 1, endCol);
+	if(cols > startCol){
+		printf("Invalid column number. Choose a number between %d and %d: ", startRow, rows - 1);
 		scanf("%d", &endRow);
 	}
 }
