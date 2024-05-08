@@ -3,12 +3,14 @@
 //Due date: 05/07/2024
 //Purpose: Image Processing
 
+
 #include <stdio.h>
 
 #define NUM_ROWS 30
 #define NUM_COLS 30
 #define FILENAME "image.txt"
 
+// Function prototypes
 void displayImage(char image[][NUM_COLS], int rows, int cols);
 void brightenImage(char (*currentImage)[NUM_COLS], int rows, int cols);
 int displaySecondMenu();
@@ -27,6 +29,7 @@ int main() {
     char filename[100]; 
 
     do {
+        // Main menu
         printf("\nMain Menu:\n");
         printf("1. Load a new image\n");
         printf("2. Display the current image\n");
@@ -37,6 +40,7 @@ int main() {
 
         switch (choice1) {
             case 1:
+                // Load image from file
                 printf("Enter the name of the file: ");
                 scanf("%s", filename);
                 fp = fopen(filename, "r");
@@ -48,12 +52,13 @@ int main() {
                 }
                 break;
             case 2:
+                // Display current image
                 fp = fopen(filename, "r");
                 if (fp == NULL) {
                     printf("Error opening file.\n");
                 } else {
                     while (fgets(row, NUM_ROWS, fp)) {
-                        width = 0; // Reset width for each row
+                        width = 0;
                         for (int i = 0; row[i] != '\n' && row[i] != '\0'; i++) {
                             width++;
                         }
@@ -67,19 +72,24 @@ int main() {
                 }
                 break;
             case 3:
+                // Editing options
                choice2 = displaySecondMenu();
                 switch (choice2) {
                     case 1:
+                        // Crop image
                         displayImageToCrop(originalImage, height, width);
                         cropImage(originalImage, height, width);
+                        displayImage(originalImage, height, width);
                         saveImage(originalImage, height, width);
                         break;
                     case 2:
+                        // Dim image
                         dimImage(originalImage, height, width);
                         displayImage(originalImage, height, width);
                         saveImage(originalImage, height, width);
                         break;
                     case 3:
+                        // Brighten image
                         brightenImage(originalImage, height, width);
                         displayImage(originalImage, height, width);
                         saveImage(originalImage, height, width);
@@ -102,6 +112,7 @@ int main() {
     return 0;
 }
 
+// Function to display the image
 void displayImage(char image[][NUM_COLS], int rows, int cols) {
     printf("Displaying image:\n");
     printf("\n");
@@ -131,6 +142,7 @@ void displayImage(char image[][NUM_COLS], int rows, int cols) {
     }
 }
 
+// Function to display the second menu for editing options
 int displaySecondMenu() {
     int choice;
     do {
@@ -145,8 +157,9 @@ int displaySecondMenu() {
     return choice;
 }
 
+// Function to brighten the image
 void brightenImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
-      for (int i = 0; i < rows; i++) {
+    for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             int number = currentImage[i][j] - '0';
             if (currentImage[i][j] >= '0' && currentImage[i][j] <'4') {
@@ -156,8 +169,10 @@ void brightenImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
     }
     printf("Image brightened successfully.\n");
 }
+
+// Function to dim the image
 void dimImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
-      for (int i = 0; i < rows; i++) {
+    for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             int number = currentImage[i][j] - '0';
             if (currentImage[i][j] >= '0' && currentImage[i][j] < '4') {
@@ -168,6 +183,7 @@ void dimImage(char (*currentImage)[NUM_COLS], int rows, int cols) {
     printf("Image dimmed successfully.\n");
 }
 
+// Function to display the image with indices to aid in cropping
 void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
     printf(" 1                    21\n");
     printf("1    00         00    \n");
@@ -204,40 +220,41 @@ void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
     }
     printf("12\n");
 }
+
+// Function to crop the image
 void cropImage(char (*currentImage)[NUM_COLS], int rows, int cols){
-	int startRow, endRow, startCol, endCol = 0;
-	
-	printf("The image you want to crop is 12 x 21.\n");
-	printf("The row and column values start in the upper lefthand corner.\n");
-	printf("\n");
-	printf("Which column do you want to be the new left side? ");
-	scanf("%d", &startCol);
-	if(startCol < cols){
-		printf("Invalid column number. Choose a number between %d and %d: ", startCol + 1, cols - 1);
-		scanf("%d", &startCol);
-	}
-	printf("\nWhich column do you want to be the right left side? ");
-	scanf("%d", &endCol);
-	if(endCol > cols){
-		printf("Invalid column number. Choose a number between %d and %d: ", startCol, cols - 1);
-		scanf("%d", &endCol);
-	}
-	printf("\nWhich row do you want to be the new top? ");
-	scanf("%d", &startRow);
-	if(startRow < rows){
-		printf("Invalid row number. Choose a number between %d and %d: ", startRow + 1, rows - 1);
-		scanf("%d", &startRow);
-	}
-	printf("\nWhich row do you want to be the new bottom? ");
-	scanf("%d", &startRow);
-	if(cols > startCol){
-		printf("Invalid column number. Choose a number between %d and %d: ", startRow, rows - 1);
-		scanf("%d", &endRow);
-	}
+    int startRow, endRow, startCol, endCol = 0;
+    
+    printf("The image you want to crop is 12 x 21.\n");
+    printf("The row and column values start in the upper lefthand corner.\n");
+    printf("\n");
+    printf("Which column do you want to be the new left side? ");
+    scanf("%d", &startCol);
+    if(startCol < cols){
+        printf("Invalid column number. Choose a number between %d and %d: ", startCol + 1, cols - 1);
+        scanf("%d", &startCol);
+    }
+    printf("\nWhich column do you want to be the right left side? ");
+    scanf("%d", &endCol);
+    if(endCol > cols){
+        printf("Invalid column number. Choose a number between %d and %d: ", startCol, cols - 1);
+        scanf("%d", &endCol);
+    }
+    printf("\nWhich row do you want to be the new top? ");
+    scanf("%d", &startRow);
+    if(startRow < rows){
+        printf("Invalid row number. Choose a number between %d and %d: ", startRow + 1, rows - 1);
+        scanf("%d", &startRow);
+    }
+    printf("\nWhich row do you want to be the new bottom? ");
+    scanf("%d", &startRow);
+    if(cols > startCol){
+        printf("Invalid column number. Choose a number between %d and %d: ", startRow, rows - 1);
+        scanf("%d", &endRow);
+    }
 }
 
-
-
+// Function to save the edited image
 void saveImage(char image[][NUM_COLS], int rows, int cols) {
     char choice3;
     char filename[100];
@@ -265,5 +282,4 @@ void saveImage(char image[][NUM_COLS], int rows, int cols) {
         fclose(file);
     }
 }
-
 
