@@ -223,34 +223,28 @@ void displayImageToCrop(char image[][NUM_COLS], int rows, int cols) {
 
 // Function to crop the image
 void cropImage(char (*currentImage)[NUM_COLS], int rows, int cols){
-    int startRow, endRow, startCol, endCol = 0;
+    int startRow, endRow, startCol, endCol;
     
     printf("The image you want to crop is 12 x 21.\n");
     printf("The row and column values start in the upper lefthand corner.\n");
     printf("\n");
     printf("Which column do you want to be the new left side? ");
     scanf("%d", &startCol);
-    if(startCol < cols){
-        printf("Invalid column number. Choose a number between %d and %d: ", startCol + 1, cols - 1);
-        scanf("%d", &startCol);
-    }
     printf("\nWhich column do you want to be the right left side? ");
     scanf("%d", &endCol);
-    if(endCol > cols){
-        printf("Invalid column number. Choose a number between %d and %d: ", startCol, cols - 1);
-        scanf("%d", &endCol);
-    }
     printf("\nWhich row do you want to be the new top? ");
     scanf("%d", &startRow);
-    if(startRow < rows){
-        printf("Invalid row number. Choose a number between %d and %d: ", startRow + 1, rows - 1);
-        scanf("%d", &startRow);
-    }
     printf("\nWhich row do you want to be the new bottom? ");
-    scanf("%d", &startRow);
-    if(cols > startCol){
-        printf("Invalid column number. Choose a number between %d and %d: ", startRow, rows - 1);
-        scanf("%d", &endRow);
+    scanf("%d", &endRow);
+    int x = endCol - startCol + 1;
+    int y = endRow - startRow + 1;
+    char imageArr[y][x];
+    
+        for(int i = 0; i < y; i++){
+    	for(int j = 0; j < x; j++){
+    		imageArr[i][j] = currentImage[i+(startRow-1)][j+(startCol-1)];
+    		currentImage[i][j] = imageArr[i][j];
+    	}
     }
 }
 
